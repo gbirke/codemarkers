@@ -17,6 +17,10 @@ MarkerParser.prototype.parseLine = function ( line, lineNumber, lines ) {
 			if ( !this.result.sections[this.currentSection].code ) { // first line in new section
 				this.currentIndent = line.match( /^\s*/ );
 			}
+			if ( !line.match( this.currentIndent ) ) {
+				// TODO proper logging
+				console.log( "WARNING - indentation does not match in section " + this.currentSection + ", line " + lineNumber );
+			}
 			this.result.sections[this.currentSection].code += line.replace( this.currentIndent, '' );
 		}
 	}
@@ -42,7 +46,7 @@ MarkerParser.prototype.handleExpressions = function( line ) {
 					this.result.sections = {};
 				}
 				if ( _.has( this.result.sections, this.currentSection ) ) {
-					// TODO proper logging
+					// TODO proper logging with line number
 					console.log( "WARNING - overriding section " + this.currentSection + ". make sure your section IDs are unique" );
 				}
 				this.result.sections[this.currentSection] = { code: '' };
@@ -58,7 +62,7 @@ MarkerParser.prototype.handleExpressions = function( line ) {
 					vars = JSON.parse( jsonStr );
 				}
 				catch( e ) {
-					// TODO proper logging
+					// TODO proper logging with line number
 					console.log( "ERROR - faulty JSON: " + jsonStr + e );
 					break;
 				}
@@ -73,7 +77,7 @@ MarkerParser.prototype.handleExpressions = function( line ) {
 		}
 	}
 	if ( !expressionCount ) {
-		// TODO proper logging
+		// TODO proper logging with line number
 		console.log( "ERROR - no expression found in " + line );
 	}
 }
