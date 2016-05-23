@@ -5,6 +5,7 @@ var _ = require( 'lodash' ),
 function MarkerParser() {
 	this.result = { code: '' };
 	this.currentSection = null;
+	this.currentIndent = null;
 }
 
 MarkerParser.prototype.parseLine = function ( line, lineNumber, lines ) {
@@ -13,7 +14,10 @@ MarkerParser.prototype.parseLine = function ( line, lineNumber, lines ) {
 		line += "\n";
 		this.result.code += line;
 		if ( this.currentSection !== null ) {
-			this.result.sections[this.currentSection].code += line;
+			if ( !this.result.sections[this.currentSection].code ) { // first line in new section
+				this.currentIndent = line.match( /^\s*/ );
+			}
+			this.result.sections[this.currentSection].code += line.replace( this.currentIndent, '' );
 		}
 	}
 	else {

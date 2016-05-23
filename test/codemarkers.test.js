@@ -41,6 +41,18 @@ test( 'Given code with section markers, each section ends the previous', functio
 	assert.end();
 } );
 
+test( 'Indentation of first line of section is removed from all section lines', function( assert ) {
+	var code = fs.readFileSync( __dirname + '/marked_code/indented_sections.js', 'utf-8' ),
+		result = getMarkers( code ),
+		indentedCode = 'if(true){\n\treturn "t";\n}'
+		expectedSections = {
+			firstSection: { code: indentedCode },
+			secondSection: { code: indentedCode }
+		};
+	assert.deepEquals( result.sections, expectedSections );
+	assert.end();
+} );
+
 test( 'Given global json expressions, they are merged in global context', function( assert ) {
 	var code = fs.readFileSync( __dirname + '/marked_code/section_json.js', 'utf-8' ),
 		result = getMarkers( code ),
