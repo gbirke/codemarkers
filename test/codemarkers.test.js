@@ -29,3 +29,15 @@ test( 'Given code with section marker, the trimmed section text is returned', fu
 	assert.deepEquals( result.sections, expectedSections );
 	assert.end();
 } );
+
+test( 'Given code with section markers, each section ends the previous', function( assert ) {
+	var code = fs.readFileSync( __dirname + '/marked_code/section_multi_no_end.js', 'utf-8' ),
+		result = getMarkers( code ),
+		expectedSections = {
+			firstSection: { code: 'console.log( "foo" );' },
+			secondSection: { code: 'console.log( "bar" );' }
+		};
+	assert.deepEquals( result.sections, expectedSections );
+	assert.end();
+} );
+

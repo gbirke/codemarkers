@@ -3,4 +3,4 @@ var foo = 0;
 
 // cm: section=firstSection
 console.log( "test" );
-// cm: endsection
+// codemarker: endsection
