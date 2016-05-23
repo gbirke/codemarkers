@@ -1,4 +1,4 @@
-#Codemarkers - Annotate source code for examples in documentation
+# Codemarkers - Annotate source code for examples in documentation
 
 This script is for splitting whole code files into small example snippets. It checks the comments of the source code file for markers and generates a JSON data structure from it. The JSON structure can then be rendered with any template engine.
 
@@ -29,7 +29,7 @@ Use the `section` and `endsection` expressions to designate sections of code:
         // cm: endsection
     }
 
-Each `section` needs to have a valid, unique ID. Valid IDs can consist of upper- and lowercase characters, digits and underscores and must not begin with a digit.
+Each `section` needs to have a valid, unique ID. Valid IDs can consist of any non-whitespace character.
 
 The `endsection` marker is optional - each new `section` ends the previous one.
 
