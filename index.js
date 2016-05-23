@@ -37,7 +37,10 @@ MarkerParser.prototype.handleExpressions = function( line ) {
 				if ( _.isEmpty( this.result.sections ) ) {
 					this.result.sections = {};
 				}
-				// TODO check for existing section and log error
+				if ( _.has( this.result.sections, this.currentSection ) ) {
+					// TODO proper logging
+					console.log( "WARNING - overriding section " + this.currentSection + ". make sure your section IDs are unique" );
+				}
 				this.result.sections[this.currentSection] = { code: '' };
 
 				break;
@@ -45,14 +48,14 @@ MarkerParser.prototype.handleExpressions = function( line ) {
 				this.currentSection = null;
 				break;
 			case 'json=':
-				jsonStr = _.trim( line.substr( expressionMatch.index + expressionMatch[0].length ) )
+				jsonStr = _.trim( line.substr( expressionMatch.index + expressionMatch[0].length ) );
 
 				try {
 					vars = JSON.parse( jsonStr );
 				}
 				catch( e ) {
 					// TODO proper logging
-					console.log("ERROR - faulty JSON:" + jsonStr + e )
+					console.log( "ERROR - faulty JSON: " + jsonStr + e );
 					break;
 				}
 				this.result.globals = _.extend( this.result.globals, vars );
@@ -66,7 +69,8 @@ MarkerParser.prototype.handleExpressions = function( line ) {
 		}
 	}
 	if ( !expressionCount ) {
-		console.log("Error: no expression found in " + line)
+		// TODO proper logging
+		console.log( "ERROR - no expression found in " + line );
 	}
 }
 
