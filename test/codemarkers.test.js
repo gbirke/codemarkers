@@ -41,3 +41,37 @@ test( 'Given code with section markers, each section ends the previous', functio
 	assert.end();
 } );
 
+test( 'Given global json expressions, they are merged in global context', function( assert ) {
+	var code = fs.readFileSync( __dirname + '/marked_code/section_json.js', 'utf-8' ),
+		result = getMarkers( code ),
+		expectedGlobals =  { test: 'bar', another: 1 };
+	assert.deepEquals( result.globals, expectedGlobals );
+	assert.end();
+} );
+
+
+test( 'Given json expression, variables are stored for section', function( assert ) {
+	var code = fs.readFileSync( __dirname + '/marked_code/section_json.js', 'utf-8' ),
+		result = getMarkers( code ),
+		expectedVarsInFirstSection =  { test: 'foo', another: 1 },
+		expectedVarsInSecondSection =  { test: 'bar' };
+	assert.deepEquals( result.sections.firstSection.vars, expectedVarsInFirstSection );
+	assert.deepEquals( result.sections.secondSection.vars, expectedVarsInSecondSection );
+	assert.end();
+} );
+
+test( 'Given json expressions in sections, global variables are overridden', function( assert ) {
+	var code = fs.readFileSync( __dirname + '/marked_code/section_json.js', 'utf-8' ),
+		result = getMarkers( code ),
+		expectedGlobals =  { test: 'bar', another: 1 };
+	assert.deepEquals( result.globals, expectedGlobals );
+	assert.end();
+} );
+
+test( 'Given global string after json expressions, variable merging fails', function( assert ) {
+	var code = fs.readFileSync( __dirname + '/marked_code/invalid_json.js', 'utf-8' ),
+		result = getMarkers( code );
+	assert.notOk( result.globals );
+	assert.end();
+} );
+

@@ -24,7 +24,7 @@ MarkerParser.prototype.parseLine = function ( line, lineNumber, lines ) {
 MarkerParser.prototype.handleExpressions = function( line ) {
 	var expressionResult = {},
 		expressionCount = 0,
-		expressionMatch, sectionName;
+		expressionMatch, sectionName, jsonStr, vars;
 	while ( ( expressionMatch = codemarkerExpression.exec( line ) ) !== null ) {
 		expressionCount++;
 		switch( expressionMatch[1] ) {
@@ -45,7 +45,24 @@ MarkerParser.prototype.handleExpressions = function( line ) {
 				this.currentSection = null;
 				break;
 			case 'json=':
-				throw new Exception( "not implemented yet!");
+				jsonStr = _.trim( line.substr( expressionMatch.index + expressionMatch[0].length ) )
+
+				try {
+					vars = JSON.parse( jsonStr );
+				}
+				catch( e ) {
+					// TODO proper logging
+					console.log("ERROR - faulty JSON:" + jsonStr + e )
+					break;
+				}
+				this.result.globals = _.extend( this.result.globals, vars );
+				if ( this.currentSection !== null ) {
+					this.result.sections[this.currentSection].vars = _.extend(
+						this.result.sections[this.currentSection].vars,
+						vars
+					);
+				}
+				break;
 		}
 	}
 	if ( !expressionCount ) {
