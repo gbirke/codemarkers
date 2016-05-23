@@ -2,7 +2,10 @@
   "name": "codemarkers",
   "version": "0.1.0",
   "description": "Annotate source code for examples in documentation",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "bin": {
+    "codemarkers": "lib/cli.js"
+  },
   "scripts": {
     "test": "tape test/**.js"
   },
@@ -18,11 +21,12 @@
   "bugs": {
     "url": "https://github.com/gbirke/codemarkers/issues"
   },
-  "homepage": "https://github.com/gbirke/codemarkers#readme",
+  "homepage": "https://github.com/gbirke/codemarkers",
   "devDependencies": {
     "tape": "^4.5.1"
   },
   "dependencies": {
+    "commander": "^2.9.0",
     "lodash": "^4.13.1"
   }
 }
