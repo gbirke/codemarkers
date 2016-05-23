@@ -4,15 +4,18 @@ This script is for splitting whole code files into small example snippets. It ch
 
 The reasoning behind this is to avoid duplicated effort between code samples in the documentation and actual example code.
 
-## Installation
-Run
-    npm install -g gbirke/codemarkers
-
 ## Usage
-The tools relies on special "marker" comments in your source code. Each comment must begin with `cm:` or `codemarker:` (pay attention to the colon). It can be followed by one or more code marker expressions (see below). All lines containing markers will be removed from the output data.
+The tools relies on special "marker" comments in your source code. Each comment must begin with `cm:` or `codemarker:` (the colon is mandatory). It can be followed by one or more code marker expressions (see below). All lines containing markers will be removed from the output data.
 
-TODO show usage example from the command line
+To display the generated JSON, use
 
+    codemarkers input_file.js
+
+To save the JSON to an output file, use
+
+    codemarkers -o output_file.json input_file.js
+
+Run `codemarkers -h` to see all options.
 
 ### Defining example sections
 Use the `section` and `endsection` expressions to designate sections of code:
@@ -48,7 +51,7 @@ Each section has its own "context" of defined variables. You can have variables 
 
 At the moment, `json` must be the last expression in a codemarker line.
 
-## Example JSON output
+## JSON output
 
 This is the output for a single file:
 
@@ -84,7 +87,14 @@ If applied to a directory, the above output is repeated for each file like this:
 }
 ```
 
+## Installation
+Run
+
+    npm install -g codemarkers
+
 ## Possible extensions and changes in the future
 * Switches for whitespace handling (line removal, indentation removal, tab/space indentation conversion)
 * Switch for splitting into lines instead of having the whole text (additional `code_lines` key in the result or switching `code` for `code_lines`). This'll allow for line numbering. The switch may allow a number offset
 * Get replace lodash library with other libraries.
+
+
