@@ -9,6 +9,9 @@
   "scripts": {
     "test": "tape test/**.js"
   },
+  "directories": {
+    "example": "./example_templates"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gbirke/codemarkers.git"

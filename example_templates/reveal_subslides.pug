@@ -1,0 +1,13 @@
+extends ./reveal_layout.pug
+
+block content
+	section
+		section
+			pre
+				code= code
+		each s in sections
+			section
+				pre
+					code= s.code 
+
+
