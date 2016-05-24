@@ -82,11 +82,13 @@ If applied to a directory, the above output is repeated for each file like this:
 
 ```JSON
 {
-    "path/to/file_1.js": {
-        "code": "// This code has no sections"
-    },
-    "path/to/file_2.js": {
-        "code": "// This just demonstrating multiple file handling"
+    files: {
+        "path/to/file_1.js": {
+            "code": "// This code has no sections"
+        },
+        "path/to/file_2.js": {
+            "code": "// This just demonstrating multiple file handling"
+        }
     }
 }
 ```
@@ -97,6 +99,7 @@ Run
     npm install -g codemarkers
 
 ## Possible extensions and changes in the future
+* Allow section without ID (generate the IDs)
 * Switches for whitespace handling (line removal, indentation removal, tab/space indentation conversion)
 * Switch for splitting into lines instead of having the whole text (additional `code_lines` key in the result or switching `code` for `code_lines`). This'll allow for line numbering. The switch may allow a number offset
 * Add mime type hint to generated info
