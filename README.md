@@ -99,6 +99,7 @@ Run
 ## Possible extensions and changes in the future
 * Switches for whitespace handling (line removal, indentation removal, tab/space indentation conversion)
 * Switch for splitting into lines instead of having the whole text (additional `code_lines` key in the result or switching `code` for `code_lines`). This'll allow for line numbering. The switch may allow a number offset
-* Get replace lodash library with other libraries.
+* Add mime type hint to generated info
+* Replace lodash library with other libraries.
 
 
