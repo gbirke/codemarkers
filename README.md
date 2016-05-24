@@ -15,6 +15,10 @@ To save the JSON to an output file, use
 
     codemarkers -o output_file.json input_file.js
 
+You can also use a globbing pattern:
+
+        codemarkers -o output_file.json 'code/**/*.js'
+
 Run `codemarkers -h` to see all options.
 
 ### Defining example sections
