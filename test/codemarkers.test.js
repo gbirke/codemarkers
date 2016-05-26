@@ -31,13 +31,10 @@ test( 'Given code with section marker, the trimmed section text is returned', fu
 test( 'Given code with section marker, the untrimmed section text is a part', function( assert ) {
 	var code = fs.readFileSync( __dirname + '/marked_code/section_simple.js', 'utf-8' ),
 		result = getMarkers( code ),
-		expectedSections = {
-			firstSection: { code: 'console.log( "test" );' }
-		};
-	assert.deepEquals( result.sections, expectedSections );
+		expectedSectionPart = { code: 'console.log( "test" );\n', section: 'firstSection' };
+	assert.deepEquals( result.parts[1], expectedSectionPart );
 	assert.end();
 } );
-
 
 test( 'Given code with section markers, each section ends the previous', function( assert ) {
 	var code = fs.readFileSync( __dirname + '/marked_code/section_multi_no_end.js', 'utf-8' ),
@@ -47,6 +44,15 @@ test( 'Given code with section markers, each section ends the previous', functio
 			secondSection: { code: 'console.log( "bar" );' }
 		};
 	assert.deepEquals( result.sections, expectedSections );
+	assert.end();
+} );
+
+test( 'Given code with section markers, it it split into parts', function( assert ) {
+	var code = fs.readFileSync( __dirname + '/marked_code/indented_sections.js', 'utf-8' ),
+		result = getMarkers( code );
+	assert.equals( result.parts.length, 5 );
+	assert.equals( result.parts[1].section, 'firstSection' );
+	assert.equals( result.parts[3].section, 'secondSection' );
 	assert.end();
 } );
 
