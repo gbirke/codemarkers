@@ -67,7 +67,10 @@ This is the output for a single file:
 
 ```JSON
 {
-    "code": "complete code from the file, with codemarker lines removed",
+    "parts": [
+        { "code": "code from before the first section" },
+        { "code": "section code", "section": "section_id" }
+    ],
     "sections": {
         "section_id": {
             "code": "section code",
