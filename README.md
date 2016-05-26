@@ -5,27 +5,7 @@ This script is for splitting whole code files into small example snippets. It ch
 Why do this? You avoid avoid duplicated effort between documentation and example code! No more copy-pasting, no more outdated examples.
 
 ## Usage
-The tools relies on special "marker" comments in your source code. Each comment must begin with `cm:` or `codemarker:` (the colon is mandatory). Each marker must be followed by one or more code marker expressions (see below). All lines containing markers will be removed from the output data.
-
-To display the generated JSON, use
-
-    codemarkers input_file.js
-
-To save the JSON to an output file, use
-
-    codemarkers -o output_file.json input_file.js
-
-You can also use a globbing pattern:
-
-```
-codemarkers -o output_file.json 'code/**/*.js'
-```
-
-Run `codemarkers -h` to see all options.
-
-The generated JSON has the keys *parts* and *sections*.  
-Parts contain the whole code, unchanged, separated at section markers. The parts are in order of occurence.  
-Sections contain only the example code, with whitespace at the beginning trimmed.
+The tools relies on special "marker" comments in your source code. Each comment must begin with `cm:` or `codemarker:` (the colon is mandatory). Each marker must be followed by one or more code marker expressions like `section`, `endsection` and `json`. All lines containing markers will be removed from the output data.
 
 ### Defining example sections
 Use the `section` and `endsection` expressions to designate sections of code:
@@ -47,7 +27,7 @@ Each `section` needs to have a valid, unique ID. Valid IDs can consist of any no
 The `endsection` marker is optional - each new `section` ends the previous one.
 
 ### Adding variables
-To add additional information to a section, you can use the `json` expression.
+If you want to output explanations or short descriptions of your code, use the `json` expression. 
 
     // cm: json={ "description": "Global description of the file" }
     // cm: json={ "info": "Global info variable, will be overwritten" }
@@ -60,6 +40,29 @@ To add additional information to a section, you can use the `json` expression.
 Each section has its own "context" of defined variables. You can have variables with the same name in each section. Also, there is the "global" context for the whole code which contains all variables outside sections and the value from the last section that contained the variable.
 
 At the moment, `json` must be the last expression in a codemarker line.
+
+## Generating the JSON data on the command line
+
+To display the generated JSON, use
+
+    codemarkers -p input_file.js
+
+To save the JSON to an output file, use
+
+    codemarkers -o output_file.json input_file.js
+
+You can also use a globbing pattern:
+
+```
+codemarkers -o output_file.json 'code/**/*.js'
+```
+
+Run `codemarkers -h` to see all options.
+
+The generated JSON has the keys *parts* and *sections*.  
+Parts contain the whole code, unchanged, separated at section markers. The parts are in order of occurence.  
+Sections contain only the example code, with whitespace at the beginning trimmed.
+
 
 ## JSON output
 
@@ -110,6 +113,7 @@ Run
 ## Possible extensions and changes in the future
 * Allow section without ID (generate the IDs as hashes from content)
 * Switches for whitespace handling (line removal, indentation removal, tab/space indentation conversion)
+* Remove the "sections" concept, put all data in parts, with whitespace/indentation information 
 * Switch for splitting into lines instead of having the whole text (additional `code_lines` key in the result or switching `code` for `code_lines`). This'll allow for line numbering. The switch may allow a number offset
 * Add mime type hint to generated info
 * Replace lodash library with other libraries.
