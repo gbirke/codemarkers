@@ -1,0 +1,15 @@
+extends ./reveal_layout.pug
+
+block styles
+	style.
+		.reveal .slides section pre.hljs .fragment { visibility: visible; opacity: 1; }
+		.reveal .slides section pre.hljs .fragment.current-fragment { color: red; }
+
+block content
+	section
+		section
+			// can't use highlight.js plugin for reveal.js because it would render the fragment spans
+			// if you want highlighting, use a pug filter
+			pre.hljs
+				each part, idx in parts
+					span(class= part.section ? 'fragment' : '')= part.code
