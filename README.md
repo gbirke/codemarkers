@@ -1,11 +1,11 @@
 # Codemarkers - Annotate source code for examples in documentation
 
-This script is for splitting whole code files into small example snippets. It checks the comments of the source code file for markers and generates a JSON data structure from it. The JSON structure can then be rendered with any template engine.
+This script is for splitting whole code files into small example snippets. It checks the comments of the source code file for markers and generates a JSON data structure from it. Use your favorite template engine to render the JSON into any format. For presentations, documentation, tutorials, etc.
 
-The reasoning behind this is to avoid duplicated effort between code samples in the documentation and actual example code.
+Why do this? You avoid avoid duplicated effort between documentation and example code! No more copy-pasting, no more outdated examples.
 
 ## Usage
-The tools relies on special "marker" comments in your source code. Each comment must begin with `cm:` or `codemarker:` (the colon is mandatory). It can be followed by one or more code marker expressions (see below). All lines containing markers will be removed from the output data.
+The tools relies on special "marker" comments in your source code. Each comment must begin with `cm:` or `codemarker:` (the colon is mandatory). Each marker must be followed by one or more code marker expressions (see below). All lines containing markers will be removed from the output data.
 
 To display the generated JSON, use
 
@@ -104,5 +104,3 @@ Run
 * Switch for splitting into lines instead of having the whole text (additional `code_lines` key in the result or switching `code` for `code_lines`). This'll allow for line numbering. The switch may allow a number offset
 * Add mime type hint to generated info
 * Replace lodash library with other libraries.
-
-
