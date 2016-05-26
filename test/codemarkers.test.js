@@ -4,19 +4,17 @@ var test = require( 'tape' ),
 
 test( 'Given code with no markers, just the text is returned', function( assert ) {
 	var code = "just\nsome\nlines",
-		expectedResult = {
-			code: "just\nsome\nlines"
-		};
-	assert.deepEquals( getMarkers( code ), expectedResult );
+		expectedParts =  [ { code: "just\nsome\nlines" } ],
+		result = getMarkers( code );
+	assert.deepEquals( result.parts, expectedParts );
 	assert.end();
 } );
 
-test( 'Whitespace at the end is trimmed', function( assert ) {
+test( 'Linebreak at the end of code is preserved in part', function( assert ) {
 	var code = "just\nsome\nlines\n",
-		expectedResult = {
-			code: "just\nsome\nlines"
-		};
-	assert.deepEquals( getMarkers( code ), expectedResult );
+		expectedParts =  [ { code: "just\nsome\nlines\n" } ],
+		result = getMarkers( code );
+	assert.deepEquals( result.parts, expectedParts );
 	assert.end();
 } );
 
@@ -29,6 +27,17 @@ test( 'Given code with section marker, the trimmed section text is returned', fu
 	assert.deepEquals( result.sections, expectedSections );
 	assert.end();
 } );
+
+test( 'Given code with section marker, the untrimmed section text is a part', function( assert ) {
+	var code = fs.readFileSync( __dirname + '/marked_code/section_simple.js', 'utf-8' ),
+		result = getMarkers( code ),
+		expectedSections = {
+			firstSection: { code: 'console.log( "test" );' }
+		};
+	assert.deepEquals( result.sections, expectedSections );
+	assert.end();
+} );
+
 
 test( 'Given code with section markers, each section ends the previous', function( assert ) {
 	var code = fs.readFileSync( __dirname + '/marked_code/section_multi_no_end.js', 'utf-8' ),
@@ -86,4 +95,3 @@ test( 'Given global string after json expressions, variable merging fails', func
 	assert.notOk( result.globals );
 	assert.end();
 } );
-

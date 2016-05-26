@@ -17,9 +17,15 @@ To save the JSON to an output file, use
 
 You can also use a globbing pattern:
 
-        codemarkers -o output_file.json 'code/**/*.js'
+```
+codemarkers -o output_file.json 'code/**/*.js'
+```
 
 Run `codemarkers -h` to see all options.
+
+The generated JSON has the keys *parts* and *sections*.  
+Parts contain the whole code, unchanged, separated at section markers. The parts are in order of occurence.  
+Sections contain only the example code, with whitespace at the beginning trimmed.
 
 ### Defining example sections
 Use the `section` and `endsection` expressions to designate sections of code:
@@ -82,7 +88,7 @@ If applied to a directory, the above output is repeated for each file like this:
 
 ```JSON
 {
-    files: {
+    "files": {
         "path/to/file_1.js": {
             "code": "// This code has no sections"
         },
