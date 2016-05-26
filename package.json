@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "commander": "^2.9.0",
+    "glob": "^7.0.3",
     "lodash": "^4.13.1"
   }
 }
